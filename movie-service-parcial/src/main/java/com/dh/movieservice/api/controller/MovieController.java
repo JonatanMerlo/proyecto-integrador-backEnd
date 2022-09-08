@@ -2,11 +2,14 @@ package com.dh.movieservice.api.controller;
 
 import com.dh.movieservice.api.service.MovieService;
 import com.dh.movieservice.domain.model.Movie;
+import com.netflix.discovery.EurekaClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -14,13 +17,17 @@ import java.util.List;
 public class MovieController {
 	private MovieService movieService;
 
+	@Value("${server.port}")
+	private String port;
+
 	@Autowired
 	public MovieController(MovieService movieService) {
 		this.movieService = movieService;
 	}
 
 	@GetMapping("/{genre}")
-	public ResponseEntity<List<Movie>> getMovieByGenre(@PathVariable("genre") String genre) {
+	public ResponseEntity<List<Movie>> getMovieByGenre(@PathVariable("genre") String genre, HttpServletResponse response) {
+		response.addHeader("port", port);
 		List<Movie> movies = movieService.getListByGenre(genre);
 		return movies.isEmpty()
 				? new ResponseEntity<>(HttpStatus.NOT_FOUND)
