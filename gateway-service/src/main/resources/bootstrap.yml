@@ -6,5 +6,5 @@ spring:
       discovery:
         enabled: true
         service-id: config-service
-  profile:
+  profiles:
     active: dev

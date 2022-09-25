@@ -1,8 +1,9 @@
 package com.dh.catalogservice.api.service.impl;
 
 import com.dh.catalogservice.api.service.CatalogService;
-import com.dh.catalogservice.api.service.MovieFeignClient;
+import com.dh.catalogservice.api.client.MovieFeignClient;
 import com.dh.catalogservice.domain.model.dto.CatalogWS;
+import com.dh.catalogservice.domain.model.dto.MovieDTO;
 import com.dh.catalogservice.domain.model.dto.MovieWS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class CatalogServiceImpl implements CatalogService {
 
 
 	public CatalogWS findByGenre(String genre){
-		ResponseEntity<List<MovieWS>> movieResponse = movieFeignClient.findMovieByGenre(genre);
+		ResponseEntity<List<MovieDTO>> movieResponse = movieFeignClient.findMovieByGenre(genre);
 		System.out.println("Puerto utilizado :" + movieResponse.getHeaders().get("port"));
 		CatalogWS catalogo = new CatalogWS(genre, movieResponse.getBody());
 		if(movieResponse.getStatusCode().is2xxSuccessful()){

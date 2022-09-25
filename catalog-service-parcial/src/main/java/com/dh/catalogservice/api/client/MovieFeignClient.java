@@ -1,13 +1,15 @@
-package com.dh.catalogservice.api.service;
+package com.dh.catalogservice.api.client;
 
 
 import com.dh.catalogservice.api.config.LoadBalancerConfig;
+import com.dh.catalogservice.domain.model.dto.MovieDTO;
 import com.dh.catalogservice.domain.model.dto.MovieWS;
 import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ import java.util.List;
 public interface MovieFeignClient {
 
     @GetMapping("movies/{genre}")
-    ResponseEntity<List<MovieWS>> findMovieByGenre(@PathVariable("genre") String genre);
+    ResponseEntity<List<MovieDTO>> findMovieByGenre(@PathVariable("genre") String genre);
+
+    @GetMapping("movies/withErrors/{genre}")
+    ResponseEntity<List<MovieDTO>> findMovieByGenreWithThrowError(@PathVariable("genre") String genre, @RequestParam("throwError") boolean throwError);
 
 }

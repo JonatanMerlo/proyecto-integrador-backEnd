@@ -22,6 +22,14 @@ public class MovieServiceImpl implements MovieService {
 		return movieRepository.findAllByGenre(genre);
 	}
 
+	public List<Movie> getListByGenre(String genre, boolean throwError) {
+		if(throwError){
+			throw new RuntimeException();
+		}
+		return movieRepository.findAllByGenre(genre);
+	}
+
+
 	@Override
 	public Movie save(Movie movie) {
 		return movieRepository.save(movie);

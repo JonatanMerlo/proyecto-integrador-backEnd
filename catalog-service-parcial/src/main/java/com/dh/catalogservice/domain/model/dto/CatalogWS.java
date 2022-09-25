@@ -5,13 +5,13 @@ import java.util.List;
 
 public class CatalogWS {
 	private String genre;
-	private List<MovieWS> movies;
+	private List<MovieDTO> movies;
 
 	public CatalogWS(){
 		//No args constructor
 	}
 
-	public CatalogWS(String genre, List<MovieWS> movies) {
+	public CatalogWS(String genre, List<MovieDTO> movies) {
 		this.genre = genre;
 		this.movies = movies;
 	}
@@ -24,11 +24,11 @@ public class CatalogWS {
 		this.genre = genre;
 	}
 
-	public List<MovieWS> getMovies() {
+	public List<MovieDTO> getMovies() {
 		return movies;
 	}
 
-	public void setMovies(List<MovieWS> movies) {
+	public void setMovies(List<MovieDTO> movies) {
 		this.movies = movies;
 	}
 

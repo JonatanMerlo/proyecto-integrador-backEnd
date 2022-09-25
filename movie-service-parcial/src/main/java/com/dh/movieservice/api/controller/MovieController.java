@@ -26,12 +26,17 @@ public class MovieController {
 	}
 
 	@GetMapping("/{genre}")
-	public ResponseEntity<List<Movie>> getMovieByGenre(@PathVariable("genre") String genre, HttpServletResponse response) {
+	ResponseEntity<List<Movie>> getMovieByGenre(@PathVariable("genre") String genre, HttpServletResponse response) {
 		response.addHeader("port", port);
 		List<Movie> movies = movieService.getListByGenre(genre);
 		return movies.isEmpty()
 				? new ResponseEntity<>(HttpStatus.NOT_FOUND)
 				: new ResponseEntity<>(movies, HttpStatus.OK);
+	}
+
+	@GetMapping("/withErrors/{genre}")
+	ResponseEntity<List<Movie>> getMovieByGenre(@PathVariable("genre") String genre, @RequestParam("throwError") boolean throwError){
+		return ResponseEntity.ok().body(movieService.getListByGenre(genre, throwError));
 	}
 
 	@PostMapping
